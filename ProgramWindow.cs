@@ -15,6 +15,11 @@ namespace DxNicc2000
 
 		internal static void Show()
 		{
+			ModFile.Load();
+			ModReader.Read();
+			ModPlayer.Play();
+			MidiPlayer.Play();
+
 			SceneFile.Load();
 			SceneReader.Position = 0;
 
@@ -81,6 +86,17 @@ technique Main {
 
 			RenderLoop.Run(Form, () =>
 			{
+				ModPlayer.Update();
+				MidiPlayer.Update();
+
+				//Debug.WriteLine(ModPlayer.Position.ToString() + ":" + ModPlayer.Division);
+
+				//for (var channel = 0; channel < 4; channel++)
+				//{
+				//	if (ModPlayer.ChannelTriggers[channel])
+				//		Debug.WriteLine(channel.ToString() + ": " + ModPlayer.ChannelSamples[channel] + ": " + ModPlayer.ChannelPitches[channel]);
+				//}
+
 				if (size != Form.ClientSize)
 				{
 					size = Form.ClientSize;
@@ -100,7 +116,7 @@ technique Main {
 				effect.BeginPass(0);
 
 				// Update Camera
-				var projection = Matrix.OrthoOffCenterLH(0, 256, 200, 0, 1, 100);
+				var projection = Matrix.OrthoOffCenterLH(0, 255, 199, 0, 1, 100);
 				var view = Matrix.Identity;
 				var world = Matrix.Identity;
 
@@ -112,8 +128,7 @@ technique Main {
 				device.SetRenderState(RenderState.CullMode, Cull.None);
 				device.VertexDeclaration = vertexDeclaration;
 
-				if(frame == 1 ||
-					(frame > 1000 && (frame % 4) == 0))
+				if((frame % 4) == 1)
 					SceneReader.Read();
 
 				if (SceneReader.Verteces == null)

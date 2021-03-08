@@ -63,6 +63,16 @@ namespace DxNicc2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] chcknbnk {
+            get {
+                object obj = ResourceManager.GetObject("chcknbnk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] scene1 {
             get {
                 object obj = ResourceManager.GetObject("scene1", resourceCulture);
